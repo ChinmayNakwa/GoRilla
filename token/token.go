@@ -18,9 +18,13 @@ const (
 	PLUS = "+"
 	SUBSTRACT = "-"
 	MULTIPLY = "*"
+	DIVIDE = "/"
+	GTHAN = ">"
+	LTHAN = "<"
 
 	COMMA = ","
 	SEMICOLON = ";"
+	EXCLAMATION = "!"
 
 	LPAREN = "("
 	RPAREN = ")"
@@ -29,7 +33,13 @@ const (
 
 	FUNCTION = "FUNCTION"
 	LET = "LET"
+	TRUE = "TRUE"
+	FALSE = "FALSE"
+	IF = "IF"
+	ELSE = "ELSE"
+	RETURN = "RETURN"
 )
+
 
 var keywords = map[string]TokenType {
 	"fn": FUNCTION,

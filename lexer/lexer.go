@@ -29,6 +29,8 @@ func (l *Lexer) readChar() {
 func (l *Lexer) NextToken() token.Token {
 	var tok token.Token
 
+	l.skipWhitespace() //whitespace only acts as a separator of tokens and doesn’t have meaning, so we need to skip over it entirely
+	
 	switch l.ch {
 	case '=':
 		tok = newToken(token.ASSIGN, l.ch)
@@ -50,6 +52,14 @@ func (l *Lexer) NextToken() token.Token {
 		tok = newToken(token.SUBSTRACT, l.ch)
 	case '*':
 		tok = newToken(token.MULTIPLY, l.ch)
+	case '/':
+		tok = newToken(token.DIVIDE, l.ch)
+	case '<':
+		tok = newToken(token.LTHAN, l.ch)
+	case '>':
+		tok = newToken(token.GTHAN, l.ch)
+	case '!':
+		tok = newToken(token.EXCLAMATION, l.ch)
 	case 0:
 		tok.Literal = ""
 		tok.Type = token.EOF
@@ -57,6 +67,10 @@ func (l *Lexer) NextToken() token.Token {
 		if isLetter(l.ch) {
 			tok.Literal = l.readIdentifier()
 			tok.Type = token.LookupIndent(tok.Literal)
+			return tok
+		} else if isDigit(l.ch) {
+			tok.Type = token.INT
+			tok.Literal = l.readNumber()
 			return tok
 		} else {
 			tok = newToken(token.ILLEGAL, l.ch)
@@ -84,4 +98,22 @@ func (l *Lexer) readIdentifier() string {
 // Checks it the given argument is a letter (eg. date_time)
 func isLetter(ch byte) bool {
 	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_'
+}
+
+func (l *Lexer) skipWhitespace() {
+	for l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
+		l.readChar()
+	}
+}
+
+func isDigit(ch byte) bool {
+	return '0' <= ch && ch <= '9'
+}
+
+func (l *Lexer) readNumber() string {
+	position := l.position
+	for isDigit(l.ch) {
+		l.readChar()
+	}
+	return l.input[position:l.position]
 }
