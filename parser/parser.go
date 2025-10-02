@@ -70,6 +70,10 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerInfix(token.LTHAN , p.parseInfixExpression)
 	p.registerInfix(token.GTHAN , p.parseInfixExpression)
 
+	// For boolean
+	p.registerPrefix(token.TRUE, p.parseBoolean)
+	p.registerPrefix(token.FALSE, p.parseBoolean)
+
 	return p
 }
 
@@ -280,3 +284,10 @@ func (p *Parser) parseInfixExpression(left ast.Expression) ast.Expression {
 
 	return expression
 }
+
+// Boolean
+
+func (p *Parser) parseBoolean() ast.Expression {
+	return &ast.Boolean{ Token: p.curToken, Value: p.curTokenIs(token.TRUE)}
+}
+
