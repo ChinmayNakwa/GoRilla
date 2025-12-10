@@ -43,7 +43,6 @@ const (
 	RETURN = "RETURN"
 )
 
-
 var keywords = map[string]TokenType {
 	"fn": FUNCTION,
 	"let": LET,
