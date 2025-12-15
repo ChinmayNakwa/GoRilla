@@ -13,6 +13,7 @@ const (
 
 	IDENT = "IDENT" // add, x, y, ..
 	INT  = "INT" // 0, 9, 2,
+	STRING = "STRING"
 
 	ASSIGN  = "="
 	PLUS = "+"
