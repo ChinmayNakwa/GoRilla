@@ -1,6 +1,9 @@
 package evaluator
 
-import "GoRilla/object"
+import (
+	"fmt"
+	"GoRilla/object"
+)
 
 var builtins = map[string]*object.Builtin {
 	"len": &object.Builtin {
@@ -116,4 +119,25 @@ var builtins = map[string]*object.Builtin {
 			return &object.Array{Elements: newElements}
 		},
 	},
+
+	"engrave": &object.Builtin{
+		Fn: func(args ...object.Object) object.Object {
+			for _, arg := range args {
+				fmt.Print(arg.Inspect())
+			}
+
+			return NULL
+		},
+	},
+
+	"engraveln": &object.Builtin{
+		Fn: func(args ...object.Object) object.Object {
+			for _, arg := range args {
+				fmt.Println(arg.Inspect())
+			}
+
+			return NULL
+		},
+	},
+	
 }
