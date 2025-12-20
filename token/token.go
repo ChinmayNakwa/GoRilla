@@ -26,6 +26,7 @@ const (
 	NOT_EQ = "!="
 
 	COMMA = ","
+	COLON = ":"
 	SEMICOLON = ";"
 	EXCLAMATION = "!"
 
